@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<title>AHSAN x NOVA — Temp Mail</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="loader" class="loader-screen">
+  <div class="loader-logo">AHSAN <span>x</span> NOVA</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- ============ AUTH SCREEN ============ -->
+<div id="authScreen" class="screen active">
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="auth-container">
+    <div class="brand">
+      <div class="brand-mark">AxN</div>
+      <h1 class="brand-name">AHSAN <span>x</span> NOVA</h1>
+      <p class="brand-tag">Temporary Mail. Real Inbox. Zero Clutter.</p>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Sign In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" class="auth-form active">
+        <h2>Welcome back</h2>
+        <p class="form-sub">Sign in with your real Gmail account</p>
+
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@gmail.com" required autocomplete="email">
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+
+        <button type="submit" class="btn-primary">
+          <span>Sign In</span>
+        </button>
+
+        <button type="button" class="link-btn" id="forgotBtn">Forgot password?</button>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="signupForm" class="auth-form">
+        <h2>Create account</h2>
+        <p class="form-sub">Use your real Gmail — no fake emails</p>
+
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="you@gmail.com" required autocomplete="email">
+
+        <label>Password</label>
+        <input type="password" id="signupPassword" placeholder="Min 6 characters" minlength="6" required autocomplete="new-password">
+
+        <label>Confirm Password</label>
+        <input type="password" id="signupConfirm" placeholder="Repeat password" minlength="6" required autocomplete="new-password">
+
+        <button type="submit" class="btn-primary">
+          <span>Create Account</span>
+        </button>
+      </form>
+    </div>
+
+    <p class="footer-note">© 2026 AHSAN x NOVA — Built with love</p>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD SCREEN ============ -->
+<div id="dashScreen" class="screen">
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-mark small">AxN</div>
+      <span>AHSAN <b>x</b> NOVA</span>
+    </div>
+    <div class="topbar-user">
+      <span id="userEmail" class="user-email"></span>
+      <button id="logoutBtn" class="btn-ghost">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="dash">
+    <section class="gen-panel">
+      <h2 class="section-title">Generate a Mailbox</h2>
+
+      <div class="gen-tabs">
+        <button class="gen-tab active" data-gen="random">
+          <span class="tab-icon">🎲</span>
+          <span>Random</span>
+        </button>
+        <button class="gen-tab" data-gen="custom">
+          <span class="tab-icon">✍️</span>
+          <span>Custom</span>
+        </button>
+      </div>
+
+      <div id="genRandom" class="gen-body active">
+        <p class="hint">Get a random fresh address instantly</p>
+        <button id="genRandomBtn" class="btn-primary big">
+          <span>Generate Random Mail</span>
+        </button>
+      </div>
+
+      <div id="genCustom" class="gen-body">
+        <p class="hint">Pick your own name — we'll add a domain</p>
+        <div class="custom-row">
+          <input type="text" id="customName" placeholder="yourname" maxlength="24" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <select id="domainSelect">
+            <option value="1secmail.com">@1secmail.com</option>
+            <option value="1secmail.net">@1secmail.net</option>
+            <option value="1secmail.org">@1secmail.org</option>
+          </select>
+        </div>
+        <button id="genCustomBtn" class="btn-primary big">
+          <span>Generate Custom Mail</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="mailboxes-panel">
+      <div class="panel-head">
+        <h2 class="section-title">Your Mailboxes</h2>
+        <span id="mailCount" class="count-badge">0</span>
+      </div>
+      <div id="mailboxes" class="mailboxes"></div>
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">📭</div>
+        <p>No mailboxes yet</p>
+        <p class="empty-sub">Generate one above to start receiving mail</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- INBOX MODAL -->
+  <div id="inboxModal" class="modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <p class="modal-label">Inbox for</p>
+          <h3 id="inboxAddress" class="inbox-addr"></h3>
+        </div>
+        <button id="closeInbox" class="btn-ghost">✕</button>
+      </div>
+
+      <div class="inbox-actions">
+        <button id="refreshInbox" class="btn-mini">🔄 Refresh</button>
+        <button id="copyAddr" class="btn-mini">📋 Copy</button>
+        <button id="deleteMailbox" class="btn-mini danger">🗑 Delete Mailbox</button>
+      </div>
+
+      <div id="inboxList" class="inbox-list"></div>
+      <div id="inboxEmpty" class="inbox-empty">
+        <p>📬 No messages yet</p>
+        <p class="empty-sub">Waiting for incoming mail...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGE VIEW MODAL -->
+  <div id="msgModal" class="modal">
+    <div class="modal-card msg-card">
+      <div class="modal-head">
+        <h3 id="msgSubject"></h3>
+        <button id="closeMsg" class="btn-ghost">✕</button>
+      </div>
+      <div class="msg-meta">
+        <p><b>From:</b> <span id="msgFrom"></span></p>
+        <p><b>Date:</b> <span id="msgDate"></span></p>
+      </div>
+      <div id="msgBody" class="msg-body"></div>
+    </div>
+  </div>
+
+  <!-- CONFIRM MODAL -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-card confirm-card">
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmText">This cannot be undone.</p>
+      <div class="confirm-actions">
+        <button id="confirmNo" class="btn-ghost">Cancel</button>
+        <button id="confirmYes" class="btn-primary danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
